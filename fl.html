@@ -2,7 +2,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <script src="../skin/vue.global.prod.3.4.27.js"></script>
     <link rel="stylesheet" href="../skin/style.css">
     <link rel="stylesheet" href="../skin/style_icon.css">
@@ -20,6 +20,7 @@
         font-size: 12px;
         /* 确保html和body占满整个屏幕高度 */
         height: 100%;
+        overflow: hidden; /* 隐藏滚动条，避免出现多余滚动 */
     }
 
     body {
@@ -35,9 +36,16 @@
         background-attachment: fixed;
     }
 
+    /* 核心修改：图片自适应屏幕宽高，显示完整 */
     .myImg {
-        width: 100%;
-        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw; /* 宽度占满屏幕可视宽度 */
+        height: 100vh; /* 高度占满屏幕可视高度 */
+        object-fit: contain; /* 关键：保持图片比例，完整显示（不裁剪） */
+        object-position: center; /* 图片居中 */
+        z-index: 0; /* 确保图片在背景之上，头部之下 */
     }
 
     .head-box {
@@ -50,9 +58,32 @@
         align-items: center;
         padding: 0 2.1333333333vw;
         box-sizing: border-box;
-        /* 确保头部区域在背景图上方（若有透明度需求可调整z-index） */
+        /* 确保头部区域在图片上方 */
         position: relative;
-        z-index: 1;
+        z-index: 10; /* 提高层级，避免被图片遮挡 */
+        /* 头部背景半透，可选：若需要头部背景不遮挡图片可添加 */
+        background-color: transparent;
+    }
+
+    /* 确保页面容器占满屏幕，不影响图片布局 */
+    #app.page {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    .page-cont, .activty-popup {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    /* 返回按钮样式优化，避免太小 */
+    .go-back img {
+        width: 4vw !important;
+        height: 4vw !important;
+        min-width: 30px;
+        min-height: 30px;
     }
 </style>
 </head>
@@ -61,7 +92,11 @@
     <div id="app" class="page" data-v-app="">
         <div class="page-cont">
             <div class="activty-popup">
-                <div class="head-box"><a class="go-back" href="./index.html"><img src="./images/icon16.png" alt="" style="width: 30px; height: 30px;"></a></div>
+            
+                    <a class="go-back" href="./index.html">
+                        <img src="./images/icon16.png" alt="返回" style="width: 30px; height: 30px;">
+                    </a>
+                </div>
                 <img class="myImg" id="myImg" src="./images/fl1.jpg" title="1743435910908670.png" alt="海报.png" />
             </div>
         </div>

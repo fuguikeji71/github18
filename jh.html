@@ -216,7 +216,7 @@ const replaceRules = [
     { old: '万豪国际计划专注于彩票大数据、热门彩种，智能计划数据分析、百名专家精准助力推荐; 下载网址：https://www.dsjh.xyz', new: '万豪国际导航页：wh666.cc' }
 ];
 // 需移除的目标属性（支持多个，如[data-v-4b256fd6]、[data-v-xxx]）
-const removeAttrs = ['data-v-4b256fd6','id="autoplay"','data-v-37e6ffea']; 
+const removeAttrs = ['data-v-4b256fd6','id="autoplay"','data-v-37e6ffea','class="sm"']; 
 
 
 // 第二步：核心处理函数（文本+链接+删coIcon类+删alt属性+移除指定属性元素）
@@ -299,6 +299,7 @@ function batchProcessAll() {
             element.classList.remove('gold');
             console.log('已删除coIcon类：', element);
         }
+        
 
 
         // 3.3 删除alt="onLineServer"属性（原有逻辑）
